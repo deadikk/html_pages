@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+
+        function create() {
+            
+                            
+
+            var mass = random(2, 25, 24);
+            var posX = 0, posY = 0;
+            var tab = document.getElementById("table");
+            tab.innerHTML = "";
+            tab.innerHTML += "<div style='display:block; position:absolute; top:200px; left:200px; width:98px; height:98px; background-color:white; border:1px solid black; font: 80px sans-serif; text-align:center;'>1</div>";
+
+            for (var i = 0; i < 24; i++) {                
+
+                tab.innerHTML += "<div style='display:block; position:absolute; top:" + posY + "px; left:" + posX + "px; width:98px; height:98px; background-color:white; border:1px solid black; font: 80px sans-serif; text-align:center;'>" + mass[i] + "</div>";
+
+                if (posX < 400) {
+                    posX += 100;
+                    if (posX == 200 && posY == 200) {
+                        posX = 300;
+                    }
+                }
+
+                else {
+                        posX = 0;
+                        posY += 100;
+
+                    }
+               
+                
+               
+                
+            }
+        }
+
+        function random(min,max,l)            
+        {
+            var arr = [], m = [], n = 0;
+                if (max - min < l-1) return;
+                for (var i=0; i<=(max-min); i++)m[i] = i + min;
+                for (var i = 0; i < l; i++) { n = Math.floor(Math.random() * (m.length)); arr[i] = m.splice(n, 1); };                
+                return arr;
+            }
+
+
+        function findDiv() {
+
+            document.getElementById("but1").disabled = true;
+            document.getElementById("but2").disabled = true;
+
+            var colOfDiv = document.getElementsByTagName("DIV");
+
+            for (var m = 0; m < colOfDiv.length; m++) {
+
+                var my = colOfDiv[m];
+                if (my.firstChild.textContent.toString() == m.toString()) {
+                    my.style.backgroundColor = 'rgb(255,255,255)';
+                }
+
+            }
+
+            var spd = document.getElementById("speed").value;
+            var j = 0;
+            var myVar = setInterval(function () { myTimer() }, 10000/spd);
+
+            function myTimer() {
+
+                
+                if (j == 25) {
+                    document.getElementById("but1").disabled = false;
+                    document.getElementById("but2").disabled = false;
+                    clearInterval(myVar)
+                };
+                for (var i = 0; i < colOfDiv.length; i++) {
+
+                    var my = colOfDiv[i];                    
+                    if (my.firstChild.textContent.toString() == j.toString()) {
+                        setColor(my);
+                        
+                        
+                    }
+                }
+                j++;
+            }
+            
+        }
+        function setColor(my) {
+            //my.style.backgroundColor = "red";
+            var interval = setInterval(function () { opa() }, 10);
+            var o = 255;
+            
+            function opa() {
+                o -= 10;
+                my.style.backgroundColor = 'rgb('+o+',200,'+o+')';
+                
+                if (o<=150) clearInterval(interval);
+            }
+        }
+        
+                   
+           
+        function setSpeed(range) {
+            var speed = document.getElementById("speed");
+            speed.value = range.value;
+        }
+
+        function setRange(speed) {
+
+            var range = document.getElementById("ran");
+            range.value = speed.value;
+            }
+    </script>
+    <style type="text/css">
+
+        .all {
+   background-image: linear-gradient(bottom, rgb(255,255,255) 0%, rgb(214,224,235) 50%, rgb(255,255,255) 100%);
+background-image: -o-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(214,224,235) 50%, rgb(255,255,255) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(214,224,235) 50%, rgb(255,255,255) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(214,224,235) 50%, rgb(255,255,255) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(214,224,235) 50%, rgb(255,255,255) 100%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(255,255,255)),
+	color-stop(0.5, rgb(214,224,235)),
+	color-stop(1, rgb(255,255,255))
+);
+
+   }
+
+    </style>
+</head>
+<body onload="create()" >
+    <div style="width:100%; height:100%;" class="all">
+    <p style=" display:block; width:300px; margin: 0 auto; font-family:'Comic Sans MS'; font-size:xx-large;"> Таблицы Шульте </p>
+    <div style="display:block;position:relative; margin: 0 auto; width:500px; height:500px;border:1px solid black;" id="table"></div>
+    
+    <button id="but1" onclick="create();" style="display:block; margin: 0 auto;">Генерировать</button>
+    <p style=" display:block; width:200px;margin: 0 auto; "> Скорость: 
+        <input type="text" style=" width:30px;" value="20" id="speed" onchange="setRange(this)"/>
+         <input id="ran" type="range" min="1" max="100" step="1" value="20" style=" width:200px;" onchange="setSpeed(this)"/>  </p>
+    <button id="but2" onclick="findDiv();" style="display:block; margin: 0 auto;">На скорость</button>
+    
+
+    <div id="text" style="display:block; background-color:transparent; position:fixed; left:20px; top:50px; width:22%;height:100%;">
+       <p style="font-family:'Comic Sans MS'; font-size:large; text-indent:2em; text-align:justify;"> 
+           Таблицы Шульте — таблицы со случайно расположенными объектами (обычно числами или буквами), 
+        служащие для тестирования и развития быстроты нахождения этих объектов в определённом порядке. 
+        Упражнения с таблицами позволяют улучшить периферическое зрительное восприятие, что важно, 
+        например, для скорочтения.</p>
+        <p style="font-family:'Comic Sans MS'; font-size:large; text-indent:2em;text-align:justify;"> 
+            Простейшая таблица Шульте представляет собой квадратный листок бумаги шириной с книжную страницу, 
+        условно разделенный на 25 одинаковых квадратных ячеек (5 рядов и 5 столбцов), 
+        в которые шрифтом обычного книжного размера беспорядочно вписаны числа от 1 до 25. 
+           </p>
+       </div>
+    <div id="Div1" style="display:block; position:fixed; background-color:transparent; right:20px; top:50px; width:22%;height:100%;">
+       <p style="font-family:'Comic Sans MS'; font-size:large; text-indent:2em;text-align:justify;"> 
+         Тренировка</p>
+           <ul style="font-family:'Comic Sans MS'; font-size:large; text-indent:2em;text-align:justify;">
+               <li>Расстояние от таблицы до глаз должно быть примерно 45—50 см. </li>
+               <li>Перед началом работы с таблицей взгляд фиксируется в её центре и больше не сдвигается.</li>
+                <li>Находить числа нужно в возрастающем порядке от 1 до 25, без пропусков, с максимальной быстротой, желательно не проговаривая числа ни про себя, ни вслух. </li>
+              <li> Очень важно избегать передвижений взгляда из центра и искать числа только периферическим зрением.</li>
+               <li>Время и периодичность тренировок нужно выбирать так, чтобы избежать переутомления. Обычно не более 10 таблиц в день.</li>
+
+    </ul>
+
+
+       </div>
+    <div id="bottom"   style=" background-color:transparent; margin: 50px auto;  width:50%; font-family:'Comic Sans MS'; font-size:large; text-indent:2em; text-align:justify;"> 
+        Тони Бьюзен отмечал, что в компьютерных программах когда на цифру указываешь курсором, глаза непроизвольно следуют за ним.
+           Поэтому, водить курсоров и нажимать на цифры нет смысла.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Движуха</title>
+     <script type="text/javascript">
+         window.onload = function () {
+
+             var canva = document.getElementById('first');
+             var ctx = canva.getContext('2d');
+             canva.style.border = '0px solid black';
+             draw();
+
+         }
+            function draw() {
+            var canva = document.getElementById('first');
+            var ctx = canva.getContext('2d');
+
+        }
+        function change() {
+        
+            var r = document.getElementById('red').value;
+            var g = document.getElementById('green').value;
+            var b = document.getElementById('blue').value;
+            var we = document.getElementById('show_col').style.backgroundColor= 'rgb('+r+','+g+','+b+')';
+            
+        }
+        function move() {
+
+            var canva = document.getElementById('first');
+            canva.style.cursor = 'crosshair';
+            var ctx = canva.getContext('2d');
+            var r = document.getElementById('red').value;
+            var g = document.getElementById('green').value;
+            var b = document.getElementById('blue').value;
+            var s = document.getElementById('size').value;
+            ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+
+            canva.onmousemove = function () {
+
+                var x = event.x;
+                var y = event.y;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, s, 0, Math.PI * 2, false);
+                ctx.fill();
+                canva.onmouseup = function () { canva.onmousemove = null; }
+                canva.onmouseout = function () { canva.onmousemove = null; }
+            }
+
+
+        }
+        </script>
+</head>
+<body >
+<div style="position: absolute; width: 1100px; height: 900px; top: 0px; left: 0px;">
+    <canvas id="first" width="1100" height="900" onmousedown="  this.style.cursor='crosshair';move()" >
+    Поставь нормальный браузер, который адекватно работает с холстом!
+    </canvas>
+</div>
+<div id="menu" style="position: absolute; width: 100px; height: 100%; top: 0px; right: 0px; background-color: #99CCFF; " >
+Цвет:(0-255)<br />
+R:<input type="text" value="0" size="3" id="red"    onchange="change()"/><br />
+G:<input type="text" value="0" size="3" id="green"  onchange="change()"/><br />
+B:<input type="text" value="0" size="3" id="blue"   onchange="change()"/><br />
+<div style="position: relative; width: 100px; height: 20px; background-color: rgb(0,0,0);" id="show_col"></div>
+Размер:<br />
+<input type="text" value="1" size="3" id="size" /><br />
+
+</div>
+</body>
+</html>
